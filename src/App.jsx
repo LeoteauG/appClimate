@@ -1,14 +1,12 @@
-import '/app.css'
-import fondo from '/images/verano.jpg'
-//style={{backgroundImage:`url(${fondo})`}}
+import 'public/styles.css'
+import Section from './components/Section'
+// import fondo from 'images/verano.jpg'
+// style={{backgroundImage:`url(${fondo})`}}
 
-function App() {
-
+function App () {
   return (
-    <div className="App " >
-      <section className='appClimate'>
-
-      </section>
+    <div className='App'>
+      <Section />
     </div>
   )
 }
