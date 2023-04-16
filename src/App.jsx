@@ -1,4 +1,4 @@
-import 'public/styles.css'
+import '../public/styles.css'
 import Section from './components/Section'
 // import fondo from 'images/verano.jpg'
 // style={{backgroundImage:`url(${fondo})`}}

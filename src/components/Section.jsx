@@ -1,4 +1,4 @@
-import 'public/styles.css'
+import '../../public/styles.css'
 const Section = () => {
   return (
     <section className='appClimate'>
