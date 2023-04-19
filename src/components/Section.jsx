@@ -4,24 +4,21 @@ import getCountries from '../services/getCountries'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import getCities from '../services/getCities'
-import getClimaCity from '../services/getClimaCity'
+// import getClimaCity from '../services/getClimaCity'
 const Section = () => {
   const [countries, setContries] = useState([])
   const [city, setCity] = useState(null)
   const [ciudad, setCiudad] = useState([])
-  const [cityClima, setCityClima] = useState([])
+  // const [cityClima, setCityClima] = useState([])
   const [bandera, setBandera] = useState(false)
 
   useEffect(() => {
     (async () => {
       setContries(await getCountries())
       setCiudad(await getCities(city))
-      setCityClima(await getClimaCity(ciudad.map(city => {
-        return city.name
-      })))
     })()
   }, [city])
-  console.log(cityClima)
+  // console.log(cityClima)
   const countryHandler = (event, valor) => {
     countries.find(country => {
       if (country.name.common === valor) {
@@ -46,9 +43,10 @@ const Section = () => {
       {
         bandera
           ? <Autocomplete
+              key={ciudad.map(city => city.id)}
               disablePortal
               id='combo-box-demo'
-              options={ciudad.map(city => city.name)}
+              options={ciudad.map(city => city.name).filter(city => city.name)}
               sx={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label='Escoge un Pais' />}
             />
