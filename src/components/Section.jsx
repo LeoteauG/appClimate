@@ -5,41 +5,51 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import getCities from '../services/getCities'
 import getClimaCity from '../services/getClimaCity'
-// import getClimaCity from '../services/getClimaCity'
 const Section = () => {
-  const [countries, setContries] = useState([])
-  const [ciudad, setCiudad] = useState([])
+  const [countries, setCountries] = useState([])
+  const [pais, setPais] = useState(null)
+  const [ciudades, setCiudades] = useState([])
+  const [ciudad, setCiudad] = useState(null)
+
   const [clima, setClima] = useState([])
 
   const [bandera, setBandera] = useState(false)
 
   useEffect(() => {
     (async () => {
-      setContries(await getCountries())
+      if (countries !== []) setCountries(await getCountries())
+      if (pais !== null) { setCiudades(await getCities(pais)) }
     })()
-  }, [])
+  }, [pais])
+
+  if (ciudad !== null) {
+    useEffect(() => {
+      (async () => {
+        setClima(await getClimaCity(ciudad))
+      })()
+    }, [ciudad])
+  }
 
   const countryHandler = (event, valor) => {
-    countries.find(async country => {
+    countries.find(country => {
       if (country.name.common === valor) {
         setBandera(true)
-        return setCiudad(await getCities(country.cca2))
+        return setPais(country.cca2)
       }
       return null
     }
     )
   }
   const cityHandler = (event, valor) => {
-    ciudad.find(async city => {
+    ciudades.find(city => {
       if (city.name === valor) {
-        return setClima(await getClimaCity(city.name))
+        return setCiudad(valor)
       }
       return null
     }
     )
   }
   console.log(clima)
-
   return (
     <section className='appClimate'>
       <Autocomplete
@@ -54,10 +64,10 @@ const Section = () => {
       {
         bandera
           ? <Autocomplete
-              onChange={cityHandler}
               disablePortal
+              onSelect={cityHandler}
               id='combo-box-demo'
-              options={ciudad.map(city => city.name)}
+              options={ciudades.map(ciudad => ciudad.name)}
               sx={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label='Escoge una Ciudad' />}
             />
