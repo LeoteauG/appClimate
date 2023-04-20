@@ -4,31 +4,42 @@ import getCountries from '../services/getCountries'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import getCities from '../services/getCities'
+import getClimaCity from '../services/getClimaCity'
 // import getClimaCity from '../services/getClimaCity'
 const Section = () => {
   const [countries, setContries] = useState([])
-  const [city, setCity] = useState(null)
   const [ciudad, setCiudad] = useState([])
-  // const [cityClima, setCityClima] = useState([])
+  const [clima, setClima] = useState([])
+
   const [bandera, setBandera] = useState(false)
 
   useEffect(() => {
     (async () => {
       setContries(await getCountries())
-      setCiudad(await getCities(city))
     })()
-  }, [city])
-  // console.log(cityClima)
+  }, [])
+
   const countryHandler = (event, valor) => {
-    countries.find(country => {
+    countries.find(async country => {
       if (country.name.common === valor) {
         setBandera(true)
-        return setCity(country.cca2)
+        return setCiudad(await getCities(country.cca2))
       }
       return null
     }
     )
   }
+  const cityHandler = (event, valor) => {
+    ciudad.find(async city => {
+      if (city.name === valor) {
+        return setClima(await getClimaCity(city.name))
+      }
+      return null
+    }
+    )
+  }
+  console.log(clima)
+
   return (
     <section className='appClimate'>
       <Autocomplete
@@ -43,12 +54,12 @@ const Section = () => {
       {
         bandera
           ? <Autocomplete
-              key={ciudad.map(city => city.id)}
+              onChange={cityHandler}
               disablePortal
               id='combo-box-demo'
-              options={ciudad.map(city => city.name).filter(city => city.name)}
+              options={ciudad.map(city => city.name)}
               sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label='Escoge un Pais' />}
+              renderInput={(params) => <TextField {...params} label='Escoge una Ciudad' />}
             />
           : null
       }
