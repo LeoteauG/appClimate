@@ -10,9 +10,7 @@ const Section = () => {
   const [pais, setPais] = useState(null)
   const [ciudades, setCiudades] = useState([])
   const [ciudad, setCiudad] = useState(null)
-
-  const [clima, setClima] = useState([])
-
+  const [clima, setClima] = useState(null)
   const [bandera, setBandera] = useState(false)
 
   useEffect(() => {
@@ -22,13 +20,11 @@ const Section = () => {
     })()
   }, [pais])
 
-  if (ciudad !== null) {
-    useEffect(() => {
-      (async () => {
-        setClima(await getClimaCity(ciudad))
-      })()
-    }, [ciudad])
-  }
+  useEffect(() => {
+    (async () => {
+      setClima(await getClimaCity(ciudad || 'Panama City'))
+    })()
+  }, [ciudad])
 
   const countryHandler = (event, valor) => {
     countries.find(country => {
@@ -65,14 +61,21 @@ const Section = () => {
         bandera
           ? <Autocomplete
               disablePortal
-              onSelect={cityHandler}
+              onChange={cityHandler}
+              value=''
               id='combo-box-demo'
               options={ciudades.map(ciudad => ciudad.name)}
               sx={{ width: 300 }}
               renderInput={(params) => <TextField {...params} label='Escoge una Ciudad' />}
             />
-          : null
+          : ''
       }
+      {clima && (
+        <div>
+          <h2>{clima.weather[0].main}</h2>
+          <img src={`http://openweathermap.org/img/wn/${clima.weather[0].icon}@2x.png`} alt='nada aqui' />
+        </div>
+      )}
     </section>
   )
 }
