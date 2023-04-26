@@ -73,6 +73,7 @@ const Section = () => {
       {clima && (
         <div>
           <h2>{clima.weather[0].main}</h2>
+          <h2>{clima.main.temp.toFixed()}º</h2>
           <img src={`http://openweathermap.org/img/wn/${clima.weather[0].icon}@2x.png`} alt='nada aqui' />
         </div>
       )}
