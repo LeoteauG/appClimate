@@ -22,7 +22,7 @@ const Section = () => {
 
   useEffect(() => {
     (async () => {
-      setClima(await getClimaCity(ciudad || 'Panama City'))
+      setClima(await getClimaCity(ciudad))
     })()
   }, [ciudad])
 
@@ -47,15 +47,17 @@ const Section = () => {
   }
   console.log(clima)
   return (
-    <section className='appClimate'>
+    <section>
       <Autocomplete
         disablePortal
         id='combo-box-demo'
         onChange={countryHandler}
+        size='small'
         options={countries.map(country => country.name.common)}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label='Escoge un Pais' />}
+        sx={{ width: '250px' }}
+        renderInput={(params) => <TextField {...params} size='small' label='Escoge un Pais' />}
       />
+
       <br />
       {
         bandera
@@ -64,18 +66,19 @@ const Section = () => {
               onChange={cityHandler}
               value=''
               id='combo-box-demo'
+              size='small'
               options={ciudades.map(ciudad => ciudad.name)}
-              sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label='Escoge una Ciudad' />}
+              sx={{ width: '250px' }}
+              renderInput={(params) => <TextField {...params} size='small' label='Escoge una Ciudad' />}
             />
           : ''
       }
       {clima && (
-        <div>
-          <h2>{clima.weather[0].main}</h2>
-          <h2>{clima.main.temp.toFixed()}º</h2>
+        <section className='appClimate'>
+          <h2>{clima.main.temp.toFixed()}º C</h2>
           <img src={`http://openweathermap.org/img/wn/${clima.weather[0].icon}@2x.png`} alt='nada aqui' />
-        </div>
+          <h2>{clima.weather[0].main}</h2>
+        </section>
       )}
     </section>
   )
