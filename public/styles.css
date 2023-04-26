@@ -1,3 +1,7 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
 .App{
     background-repeat:'no-repeat';
     background-size:cover;
@@ -5,4 +9,8 @@
     display: grid;
     justify-content: center;
     align-items: center;
+}
+.appClimate{
+    display: grid;
+    background-color: gray;
 }
