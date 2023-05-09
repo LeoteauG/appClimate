@@ -47,7 +47,7 @@ const Section = () => {
   }
   console.log(clima)
   return (
-    <section>
+    <section className='climaApp'>
       <Autocomplete
         disablePortal
         id='combo-box-demo'
