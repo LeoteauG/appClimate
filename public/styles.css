@@ -11,6 +11,12 @@
     align-items: center;
 }
 .appClimate{
-    display: grid;
-    background-color: gray;
+    margin-top: 10px;
+}
+
+.climaApp{
+    margin-top: 50%;
+    border: 1px solid rgba(69, 69, 69, 0.482);
+    padding: 20px;
+    border-radius: 15px;
 }
