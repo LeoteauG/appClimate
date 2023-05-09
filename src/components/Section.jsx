@@ -12,6 +12,7 @@ const Section = () => {
   const [ciudad, setCiudad] = useState(null)
   const [clima, setClima] = useState(null)
   const [bandera, setBandera] = useState(false)
+  const [fondo, setFondo] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -26,6 +27,16 @@ const Section = () => {
     })()
   }, [ciudad])
 
+  useEffect(() => {
+    (async () => {
+      console.log(clima.main.temp.toFixed())
+      if (clima.main.temp.toFixed() > 30) {
+        setFondo('url(../../public/images/verano.jpg)')
+      } else {
+        setFondo('url(../../public/images/invierno.jpg)')
+      }
+    })()
+  }, [clima])
   const countryHandler = (event, valor) => {
     countries.find(country => {
       if (country.name.common === valor) {
@@ -46,6 +57,7 @@ const Section = () => {
     )
   }
   console.log(clima)
+  document.body.style.backgroundImage = fondo
   return (
     <section className='climaApp'>
       <Autocomplete
