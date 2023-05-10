@@ -12,7 +12,7 @@ const Section = () => {
   const [ciudad, setCiudad] = useState(null)
   const [clima, setClima] = useState(null)
   const [bandera, setBandera] = useState(false)
-  const [fondo, setFondo] = useState(null)
+  const [fondo, setFondo] = useState('url(../../public/images/verano.jpg)')
 
   useEffect(() => {
     (async () => {
@@ -30,13 +30,14 @@ const Section = () => {
   useEffect(() => {
     (async () => {
       console.log(clima.main.temp.toFixed())
-      if (clima.main.temp.toFixed() > 30) {
+      if (clima.main.temp.toFixed() > 25) {
         setFondo('url(../../public/images/verano.jpg)')
       } else {
         setFondo('url(../../public/images/invierno.jpg)')
       }
     })()
   }, [clima])
+
   const countryHandler = (event, valor) => {
     countries.find(country => {
       if (country.name.common === valor) {
@@ -56,11 +57,13 @@ const Section = () => {
     }
     )
   }
-  console.log(clima)
   document.body.style.backgroundImage = fondo
+
+  console.log(clima)
   return (
     <section className='climaApp'>
       <Autocomplete
+        className='optionCountry'
         disablePortal
         id='combo-box-demo'
         onChange={countryHandler}
@@ -69,7 +72,6 @@ const Section = () => {
         sx={{ width: '250px' }}
         renderInput={(params) => <TextField {...params} size='small' label='Escoge un Pais' />}
       />
-
       <br />
       {
         bandera
@@ -81,13 +83,18 @@ const Section = () => {
               size='small'
               options={ciudades.map(ciudad => ciudad.name)}
               sx={{ width: '250px' }}
+              style={{ borderBottom: '2px solid rgba(159, 159, 159, 0.724)', paddingBottom: '40px' }}
               renderInput={(params) => <TextField {...params} size='small' label='Escoge una Ciudad' />}
             />
           : ''
       }
       {clima && (
         <section className='appClimate'>
+          <h1>Detalle</h1>
           <h2>{clima.main.temp.toFixed()}º C</h2>
+          <br />
+          <h1>Longitud: {clima.coord.lon}</h1>
+          <h1>Latitud: {clima.coord.lat}</h1>
           <img src={`http://openweathermap.org/img/wn/${clima.weather[0].icon}@2x.png`} alt='nada aqui' />
           <h2>{clima.weather[0].main}</h2>
         </section>
