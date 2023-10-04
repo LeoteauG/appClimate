@@ -1,4 +1,5 @@
-import '../../public/styles.css'
+// eslint-disable-next-line import/no-absolute-path
+import '/public/styles.css'
 import { useEffect, useState } from 'react'
 import getCountries from '../services/getCountries'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -12,7 +13,7 @@ const Section = () => {
   const [ciudad, setCiudad] = useState(null)
   const [clima, setClima] = useState(null)
   const [bandera, setBandera] = useState(false)
-  const [fondo, setFondo] = useState('url(../../public/images/verano.jpg)')
+  const [fondo, setFondo] = useState('url(images/verano.webp)')
 
   useEffect(() => {
     (async () => {
@@ -25,15 +26,15 @@ const Section = () => {
     (async () => {
       setClima(await getClimaCity(ciudad))
     })()
+    console.log(clima)
   }, [ciudad])
 
   useEffect(() => {
     (async () => {
-      console.log(clima.main.temp.toFixed())
       if (clima.main.temp.toFixed() > 25) {
-        setFondo('url(../../public/images/verano.jpg)')
+        setFondo('url(images/verano.webp)')
       } else {
-        setFondo('url(../../public/images/invierno.jpg)')
+        setFondo('url(images/invierno.webp)')
       }
     })()
   }, [clima])
@@ -59,7 +60,6 @@ const Section = () => {
   }
   document.body.style.backgroundImage = fondo
 
-  console.log(clima)
   return (
     <section className='climaApp'>
       <Autocomplete
